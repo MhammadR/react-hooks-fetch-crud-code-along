@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import ShoppingList from "./ShoppingList";
+import Header from "./Header";
 
 function App() {
-  const [url, setUrl] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetch("https://dog.ceo/api/breeds/image/random");
-      const res = await data.json();
-      setUrl(res.message);
-    };
-    fetchData().catch((error) => console.log("Error:", error));
-  }, []);
+  function handleDarkModeClick() {
+    setIsDarkMode((isDarkMode) => !isDarkMode);
+  }
 
   return (
-    <div>
-      {url ? <img src={url} alt="A Random Dog" /> : <p>"Loading..." </p>}
+    <div className={"App " + (isDarkMode ? "dark" : "light")}>
+      <Header isDarkMode={isDarkMode} onDarkModeClick={handleDarkModeClick} />
+      <ShoppingList />
     </div>
   );
 }
